@@ -3,16 +3,15 @@ import { getType } from "@reduxjs/toolkit";
 import * as requestActions from "./actions";
 import * as api from "../../utils/api";
 import * as successActions from "./slice";
-import { ResultModel } from "./models";
+import { ConvertResultModel } from "./models";
 
 export function* convertSaga(): Generator<StrictEffect> {
-  yield takeLatest(getType(requestActions.connvertRequest), convert);
+  yield takeLatest(getType(requestActions.convertRequest), convert);
 }
 
-function* convert(action: ReturnType<typeof requestActions.connvertRequest>) {
+function* convert(action: ReturnType<typeof requestActions.convertRequest>) {
   try {
-    const amount: ResultModel = yield call(api.convert, action.payload);
-    console.log(amount);
+    const amount: ConvertResultModel = yield call(api.convert, action.payload);
     yield put(successActions.convertSuccess(amount));
   } catch (err) {
     console.log(err);

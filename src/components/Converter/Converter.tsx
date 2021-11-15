@@ -7,14 +7,8 @@ import "./Converter.css";
 const Converter: FC = () => {
   const [amount, setAmount] = useState("");
   const [fromValue, setFromValue] = useState("USD");
-  const [toValue, setToValue] = useState("");
-  const [currencies, setCurrencies] = useState([
-    "USD",
-    "EUR",
-    "RUB",
-    "GBP",
-    "JPY",
-  ]);
+  const [toValue, setToValue] = useState("EUR");
+  const currencies = ["USD", "EUR", "RUB"];
   const convert = useTypeSelector((state) => state.convert);
 
   const dispatch = useDispatch();
@@ -33,9 +27,7 @@ const Converter: FC = () => {
 
   const handlerSubmit = (evt: React.FormEvent) => {
     evt.preventDefault();
-    console.log(fromValue, toValue, amount);
-
-    dispatch(actions.connvertRequest({ fromValue, toValue }));
+    dispatch(actions.convertRequest({ fromValue, toValue, amount }));
   };
   return (
     <form onSubmit={handlerSubmit} className="Converter">
@@ -60,8 +52,10 @@ const Converter: FC = () => {
         <button type="submit">Convert</button>
       </div>
 
-      {convert[`${fromValue}_${toValue}`] ? (
-        <h3>{convert[`${fromValue}_${toValue}`]}</h3>
+      {convert.conversion_result ? (
+        <h3>
+          {convert.conversion_result} {toValue}
+        </h3>
       ) : null}
     </form>
   );
