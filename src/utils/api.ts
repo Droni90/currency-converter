@@ -11,7 +11,7 @@ export const convert = async (data: ConvertRequestModel) => {
     );
     return await res.json();
   } catch (err) {
-    console.log(err);
+    return Promise.reject(new Error("Server error"));
   }
 };
 
@@ -20,6 +20,6 @@ export const getCurrencies = async (defaultCurrency: string) => {
     const res = await fetch(`${URL}/${API_KEY}/latest/${defaultCurrency}`);
     return await res.json();
   } catch (err) {
-    console.log(err);
+    return Promise.reject(new Error("Server error"));
   }
 };
